@@ -2,13 +2,19 @@ const express = require('express');
 const cors = require('cors');
 const routerApi = require('./routes')
 const { logHandler, boomHandler} = require('./middlewares/error.handler')
-// const boom = require('@hapi/boom');
+const  { checkApiKey } = require('./middlewares/auth.handler');
+//const boom = require('@hapi/boom');
 
 const app = express();
 const port = process.env.PORT || 3000;
+require('./utils/auth');
 
 app.use(express.json());
 
+
+app.get('/test', checkApiKey, (req, res) => {
+  res.send("Hola");
+})
 // const whilelist = [' http://localhost:3000'];
 // const options = {
 //   origin:(origin,callback) =>{
